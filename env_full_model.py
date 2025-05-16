@@ -22,8 +22,8 @@ B = np.array([[0], [(I + m * l ** 2) / p], [0], [-m * l / p]])
 
 
 # LQR cost matrices: Q penalizes state error, R penalizes control effort
-Q = np.diag([10.0, 1.0, 10.0, 1.0])  # state weights
-R = np.array([[0.001]])               # control weight
+Q = np.diag([10.00000465, 1.00000066, 10.00000386, 0.99999949])  # state weights
+R = np.array([[0.09999993]])               # control weight
 
 # Solve continuous-time Algebraic Riccati equation
 X = solve_continuous_are(A, B, Q, R)
@@ -77,16 +77,19 @@ def plot_state_evolution(state_history, control_history, time_history, save=Fals
     fig = plt.figure(figsize=(15, 10))
 
     for i in range(4):
-        plt.subplot(3, 2, i + 1)
+        plt.subplot(5, 1, i + 1)
         plt.plot(time_history, state_history[:, i], 'b-')
         plt.xlabel('Time (s)')
         plt.ylabel(state_names[i])
         plt.title(f'{state_names[i]} Evolution')
         plt.grid(True)
 
+    plt.subplot(5, 1, 5)
+    plt.plot(time_history, control_history, 'b-')
+
     plt.tight_layout()
     if save:
-        plt.savefig('state_evolution.png')
+        plt.savefig('state_evolution_LB.png')
     return fig
 
 plot_state_evolution(state_history, control_history, time_history, save=True)
